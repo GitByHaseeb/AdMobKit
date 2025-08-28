@@ -1,0 +1,217 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.1.2 effective-5.10 (swiftlang-6.1.2.1.2 clang-1700.0.13.5)
+// swift-module-flags: -target arm64-apple-ios18.5 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name AdMobKit
+// swift-module-flags-ignorable:  -interface-compiler-version 6.1.2
+import GoogleMobileAds
+import Swift
+import UIKit
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+@objc @_inheritsConvenienceInitializers final public class NativeAdManager : ObjectiveC.NSObject {
+  final public var preLoadedAd: GoogleMobileAds.NativeAd?
+  @objc override dynamic public init()
+  @objc deinit
+}
+extension AdMobKit.NativeAdManager {
+  final public func loadAd(in controller: UIKit.UIViewController, adUnitID: Swift.String)
+  final public func clearPreloadedAd()
+}
+extension AdMobKit.NativeAdManager : GoogleMobileAds.NativeAdDelegate, GoogleMobileAds.AdLoaderDelegate, GoogleMobileAds.NativeAdLoaderDelegate {
+  @objc final public func adLoader(_ adLoader: GoogleMobileAds.AdLoader, didReceive nativeAd: GoogleMobileAds.NativeAd)
+  @objc final public func adLoaderDidFinishLoading(_ adLoader: GoogleMobileAds.AdLoader)
+  @objc final public func nativeAdDidRecordClick(_ nativeAd: GoogleMobileAds.NativeAd)
+  @objc final public func nativeAdDidRecordImpression(_ nativeAd: GoogleMobileAds.NativeAd)
+  @_Concurrency.MainActor @preconcurrency @objc final public func nativeAdDidDismissScreen(_ nativeAd: GoogleMobileAds.NativeAd)
+  @objc final public func nativeAdDidRecordSwipeGestureClick(_ nativeAd: GoogleMobileAds.NativeAd)
+  @_Concurrency.MainActor @preconcurrency @objc final public func nativeAdWillDismissScreen(_ nativeAd: GoogleMobileAds.NativeAd)
+  @_Concurrency.MainActor @preconcurrency @objc final public func nativeAdWillPresentScreen(_ nativeAd: GoogleMobileAds.NativeAd)
+  @objc final public func nativeAdIsMuted(_ nativeAd: GoogleMobileAds.NativeAd)
+  @objc final public func adLoader(_ adLoader: GoogleMobileAds.AdLoader, didFailToReceiveAdWithError error: any Swift.Error)
+}
+public protocol NativeAdManagerDelegate : AnyObject {
+  func adLoaderDidReceive(ad: GoogleMobileAds.NativeAd)
+  func adLoaderDidFinishLoading(ad: GoogleMobileAds.AdLoader)
+  func nativeAdDidRecordClick(ad: GoogleMobileAds.NativeAd)
+  func nativeAdDidRecordImpression(ad: GoogleMobileAds.NativeAd)
+  func nativeAdDidDismissScreen(ad: GoogleMobileAds.NativeAd)
+  func nativeAdDidRecordSwipeGestureClick(ad: GoogleMobileAds.NativeAd)
+  func nativeAdWillDismissScreen(ad: GoogleMobileAds.NativeAd)
+  func nativeAdWillPresentScreen(ad: GoogleMobileAds.NativeAd)
+  func nativeAdIsMuted(ad: GoogleMobileAds.NativeAd)
+  func didFailToReceiveAdWithError(error: any Swift.Error)
+}
+extension AdMobKit.NativeAdManagerDelegate {
+  public func adLoaderDidReceive(ad: GoogleMobileAds.NativeAd)
+  public func adLoaderDidFinishLoading(ad: GoogleMobileAds.AdLoader)
+  public func nativeAdDidRecordClick(ad: GoogleMobileAds.NativeAd)
+  public func nativeAdDidRecordImpression(ad: GoogleMobileAds.NativeAd)
+  public func nativeAdDidDismissScreen(ad: GoogleMobileAds.NativeAd)
+  public func nativeAdDidRecordSwipeGestureClick(ad: GoogleMobileAds.NativeAd)
+  public func nativeAdWillDismissScreen(ad: GoogleMobileAds.NativeAd)
+  public func nativeAdWillPresentScreen(ad: GoogleMobileAds.NativeAd)
+  public func nativeAdIsMuted(ad: GoogleMobileAds.NativeAd)
+  public func didFailToReceiveAdWithError(error: any Swift.Error)
+}
+public protocol RewardedAdManagerDelegate : AnyObject {
+  func adDidRecordClick(ad: any GoogleMobileAds.FullScreenPresentingAd)
+  func adDidRecordImpression(ad: any GoogleMobileAds.FullScreenPresentingAd)
+  func adWillPresentFullScreenContent(ad: any GoogleMobileAds.FullScreenPresentingAd)
+  func adWillDismissFullScreenContent(ad: any GoogleMobileAds.FullScreenPresentingAd)
+  func adDidDismissFullScreenContent(ad: any GoogleMobileAds.FullScreenPresentingAd)
+  func didFailToPresentFullScreenContentWithError(error: any Swift.Error)
+}
+extension AdMobKit.RewardedAdManagerDelegate {
+  public func adDidRecordClick(ad: any GoogleMobileAds.FullScreenPresentingAd)
+  public func adDidRecordImpression(ad: any GoogleMobileAds.FullScreenPresentingAd)
+  public func adWillPresentFullScreenContent(ad: any GoogleMobileAds.FullScreenPresentingAd)
+  public func adWillDismissFullScreenContent(ad: any GoogleMobileAds.FullScreenPresentingAd)
+  public func adDidDismissFullScreenContent(ad: any GoogleMobileAds.FullScreenPresentingAd)
+  public func didFailToPresentFullScreenContentWithError(error: any Swift.Error)
+}
+@_hasMissingDesignatedInitializers @_Concurrency.MainActor final public class AdMobManager {
+  @_Concurrency.MainActor public static let shared: AdMobKit.AdMobManager
+  @_Concurrency.MainActor final public var nativeAdView: GoogleMobileAds.NativeAdView?
+  @_Concurrency.MainActor final public var preloadedNativeAd: GoogleMobileAds.NativeAd? {
+    get
+  }
+  @_Concurrency.MainActor final public func initializeAdMob()
+  @objc deinit
+}
+extension AdMobKit.AdMobManager {
+  @_Concurrency.MainActor final public func loadInterstitialAd(adUnitID: Swift.String, completion: ((Swift.Result<Swift.Bool, any Swift.Error>) -> Swift.Void)? = nil)
+  @_Concurrency.MainActor final public func showInterstitialAd(in controller: UIKit.UIViewController, delegate: (any AdMobKit.InterstitialAdManagerDelegate)? = nil)
+}
+extension AdMobKit.AdMobManager {
+  @_Concurrency.MainActor final public func loadAppOpenAd(adUnitID: Swift.String, completion: ((Swift.Result<Swift.Bool, any Swift.Error>) -> Swift.Void)? = nil)
+  @_Concurrency.MainActor final public func showAppOpenAd(in controller: UIKit.UIViewController, delegate: (any AdMobKit.AppOpenAdManagerDelegate)? = nil)
+}
+extension AdMobKit.AdMobManager {
+  @_Concurrency.MainActor final public func loadRewardedAd(adUnitID: Swift.String, completion: ((Swift.Result<Swift.Bool, any Swift.Error>) -> Swift.Void)?)
+  @_Concurrency.MainActor final public func showRewardedAd(in controller: UIKit.UIViewController, delegate: (any AdMobKit.RewardedAdManagerDelegate)? = nil, onEarnedReward: ((GoogleMobileAds.AdReward) -> Swift.Void)? = nil)
+}
+extension AdMobKit.AdMobManager {
+  @_Concurrency.MainActor final public func loadBannerAd(in controller: UIKit.UIViewController, view: UIKit.UIView, adUnitID: Swift.String, adSize: AdMobKit.BannerAdManager.BannerAdSizes, adContent: AdMobKit.BannerAdManager.BannerContent, completion: (() -> Swift.Void)? = nil, delegate: (any AdMobKit.BannerAdManagerDelegate)? = nil)
+}
+extension AdMobKit.AdMobManager {
+  @_Concurrency.MainActor final public func loadNativeAd(in controller: UIKit.UIViewController, adUnitID: Swift.String, delegate: (any AdMobKit.NativeAdManagerDelegate)? = nil)
+  @_Concurrency.MainActor final public func preLoadAd(withUnitID: Swift.String, delegate: (any AdMobKit.NativeAdManagerDelegate)? = nil)
+}
+@objc @_inheritsConvenienceInitializers final public class AppOpenAdManager : ObjectiveC.NSObject {
+  @objc override dynamic public init()
+  @objc deinit
+}
+extension AdMobKit.AppOpenAdManager {
+  final public func loadAd(adUnitID: Swift.String, completion: ((Swift.Result<Swift.Bool, any Swift.Error>) -> Swift.Void)? = nil)
+  final public func showAd(on controller: UIKit.UIViewController)
+}
+extension AdMobKit.AppOpenAdManager : GoogleMobileAds.FullScreenContentDelegate {
+  @_Concurrency.MainActor @preconcurrency @objc final public func adDidDismissFullScreenContent(_ ad: any GoogleMobileAds.FullScreenPresentingAd)
+  @_Concurrency.MainActor @preconcurrency @objc final public func ad(_ ad: any GoogleMobileAds.FullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: any Swift.Error)
+  @_Concurrency.MainActor @preconcurrency @objc final public func adDidRecordImpression(_ ad: any GoogleMobileAds.FullScreenPresentingAd)
+  @_Concurrency.MainActor @preconcurrency @objc final public func adDidRecordClick(_ ad: any GoogleMobileAds.FullScreenPresentingAd)
+  @_Concurrency.MainActor @preconcurrency @objc final public func adWillPresentFullScreenContent(_ ad: any GoogleMobileAds.FullScreenPresentingAd)
+  @_Concurrency.MainActor @preconcurrency @objc final public func adWillDismissFullScreenContent(_ ad: any GoogleMobileAds.FullScreenPresentingAd)
+}
+public protocol AppOpenAdManagerDelegate : AnyObject {
+  func adDidDismissFullScreenContent(ad: any GoogleMobileAds.FullScreenPresentingAd)
+  func adDidRecordImpression(ad: any GoogleMobileAds.FullScreenPresentingAd)
+  func adDidRecordClick(ad: any GoogleMobileAds.FullScreenPresentingAd)
+  func adWillPresentFullScreenContent(ad: any GoogleMobileAds.FullScreenPresentingAd)
+  func adWillDismissFullScreenContent(ad: any GoogleMobileAds.FullScreenPresentingAd)
+  func didFailToPresentFullScreenContentWithError(error: any Swift.Error)
+}
+extension AdMobKit.AppOpenAdManagerDelegate {
+  public func adDidDismissFullScreenContent(ad: any GoogleMobileAds.FullScreenPresentingAd)
+  public func adDidRecordImpression(ad: any GoogleMobileAds.FullScreenPresentingAd)
+  public func adDidRecordClick(ad: any GoogleMobileAds.FullScreenPresentingAd)
+  public func adWillPresentFullScreenContent(ad: any GoogleMobileAds.FullScreenPresentingAd)
+  public func adWillDismissFullScreenContent(ad: any GoogleMobileAds.FullScreenPresentingAd)
+  public func didFailToPresentFullScreenContentWithError(error: any Swift.Error)
+}
+@objc @_inheritsConvenienceInitializers final public class BannerAdManager : ObjectiveC.NSObject {
+  public enum BannerAdSizes {
+    case defaultSizeBanner
+    case mediumSizeBanner
+    case largeSizeBanner
+    case LeaderboardSizeBanner
+    case fullSizeBanner
+    case customSize(CoreFoundation.CGSize)
+  }
+  public enum BannerContent {
+    case fullScreenCover
+    case midScreen
+    public static func == (a: AdMobKit.BannerAdManager.BannerContent, b: AdMobKit.BannerAdManager.BannerContent) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  @objc override dynamic public init()
+  @objc deinit
+}
+extension AdMobKit.BannerAdManager {
+  final public func loadAd(in controller: UIKit.UIViewController, view: UIKit.UIView, adUnitID: Swift.String, adSize: AdMobKit.BannerAdManager.BannerAdSizes, adContent: AdMobKit.BannerAdManager.BannerContent)
+}
+extension AdMobKit.BannerAdManager : GoogleMobileAds.BannerViewDelegate {
+  @_Concurrency.MainActor @preconcurrency @objc final public func bannerViewDidReceiveAd(_ bannerView: GoogleMobileAds.BannerView)
+  @_Concurrency.MainActor @preconcurrency @objc final public func bannerViewDidRecordClick(_ bannerView: GoogleMobileAds.BannerView)
+  @_Concurrency.MainActor @preconcurrency @objc final public func bannerViewDidDismissScreen(_ bannerView: GoogleMobileAds.BannerView)
+  @_Concurrency.MainActor @preconcurrency @objc final public func bannerViewWillDismissScreen(_ bannerView: GoogleMobileAds.BannerView)
+  @_Concurrency.MainActor @preconcurrency @objc final public func bannerViewWillPresentScreen(_ bannerView: GoogleMobileAds.BannerView)
+  @_Concurrency.MainActor @preconcurrency @objc final public func bannerViewDidRecordImpression(_ bannerView: GoogleMobileAds.BannerView)
+  @_Concurrency.MainActor @preconcurrency @objc final public func bannerView(_ bannerView: GoogleMobileAds.BannerView, didFailToReceiveAdWithError error: any Swift.Error)
+}
+public protocol BannerAdManagerDelegate : AnyObject {
+  func bannerViewDidReceiveAd(ad: GoogleMobileAds.BannerView)
+  func bannerViewDidRecordClick(ad: GoogleMobileAds.BannerView)
+  func bannerViewDidDismissScreen(ad: GoogleMobileAds.BannerView)
+  func bannerViewWillDismissScreen(ad: GoogleMobileAds.BannerView)
+  func bannerViewWillPresentScreen(ad: GoogleMobileAds.BannerView)
+  func bannerViewDidRecordImpression(ad: GoogleMobileAds.BannerView)
+  func bannerViewDidFailToReceiveAdWithError(error: any Swift.Error)
+}
+extension AdMobKit.BannerAdManagerDelegate {
+  public func bannerViewDidReceiveAd(ad: GoogleMobileAds.BannerView)
+  public func bannerViewDidRecordClick(ad: GoogleMobileAds.BannerView)
+  public func bannerViewDidDismissScreen(ad: GoogleMobileAds.BannerView)
+  public func bannerViewWillDismissScreen(ad: GoogleMobileAds.BannerView)
+  public func bannerViewWillPresentScreen(ad: GoogleMobileAds.BannerView)
+  public func bannerViewDidRecordImpression(ad: GoogleMobileAds.BannerView)
+  public func bannerViewDidFailToReceiveAdWithError(error: any Swift.Error)
+}
+@objc @_inheritsConvenienceInitializers final public class InterstitialAdManager : ObjectiveC.NSObject {
+  @objc override dynamic public init()
+  @objc deinit
+}
+extension AdMobKit.InterstitialAdManager {
+  final public func loadAd(adUnitID: Swift.String, completion: ((Swift.Result<Swift.Bool, any Swift.Error>) -> Swift.Void)? = nil)
+  final public func showAd(on controller: UIKit.UIViewController)
+}
+extension AdMobKit.InterstitialAdManager : GoogleMobileAds.FullScreenContentDelegate {
+  @_Concurrency.MainActor @preconcurrency @objc final public func adDidDismissFullScreenContent(_ ad: any GoogleMobileAds.FullScreenPresentingAd)
+  @_Concurrency.MainActor @preconcurrency @objc final public func adDidRecordImpression(_ ad: any GoogleMobileAds.FullScreenPresentingAd)
+  @_Concurrency.MainActor @preconcurrency @objc final public func adDidRecordClick(_ ad: any GoogleMobileAds.FullScreenPresentingAd)
+  @_Concurrency.MainActor @preconcurrency @objc final public func adWillDismissFullScreenContent(_ ad: any GoogleMobileAds.FullScreenPresentingAd)
+  @_Concurrency.MainActor @preconcurrency @objc final public func adWillPresentFullScreenContent(_ ad: any GoogleMobileAds.FullScreenPresentingAd)
+  @_Concurrency.MainActor @preconcurrency @objc final public func ad(_ ad: any GoogleMobileAds.FullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: any Swift.Error)
+}
+public protocol InterstitialAdManagerDelegate : AnyObject {
+  func interstitialDidDismiss(ad: any GoogleMobileAds.FullScreenPresentingAd)
+  func adDidRecordImpression(ad: any GoogleMobileAds.FullScreenPresentingAd)
+  func adDidRecordClick(ad: any GoogleMobileAds.FullScreenPresentingAd)
+  func adWillDismissFullScreenContent(ad: any GoogleMobileAds.FullScreenPresentingAd)
+  func adWillPresentFullScreenContent(ad: any GoogleMobileAds.FullScreenPresentingAd)
+  func interstitialDidFailToPresent(error: any Swift.Error)
+}
+extension AdMobKit.InterstitialAdManagerDelegate {
+  public func interstitialDidDismiss(ad: any GoogleMobileAds.FullScreenPresentingAd)
+  public func adDidRecordImpression(ad: any GoogleMobileAds.FullScreenPresentingAd)
+  public func adDidRecordClick(ad: any GoogleMobileAds.FullScreenPresentingAd)
+  public func adWillDismissFullScreenContent(ad: any GoogleMobileAds.FullScreenPresentingAd)
+  public func adWillPresentFullScreenContent(ad: any GoogleMobileAds.FullScreenPresentingAd)
+  public func interstitialDidFailToPresent(error: any Swift.Error)
+}
+extension AdMobKit.AdMobManager : Swift.Sendable {}
+extension AdMobKit.BannerAdManager.BannerContent : Swift.Equatable {}
+extension AdMobKit.BannerAdManager.BannerContent : Swift.Hashable {}
