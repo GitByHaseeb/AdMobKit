@@ -8,13 +8,14 @@
 import UIKit
 import GoogleMobileAds
 
+@MainActor
 final class RewardedAdManager: NSObject {
     
     var presentableRewardedAd: RewardedAd?
     weak var delegate: RewardedAdManagerDelegate?
     var onUserEarnedReward: ((AdReward) -> Void)?
 }
-extension RewardedAdManager: RewardedAdProtocol {
+extension RewardedAdManager: @MainActor RewardedAdProtocol {
     //Load Function
     public func loadAd(adUnitID: String, completion: ((Result<Bool, Error>) -> Void)? = nil) {
          let reqest = Request()

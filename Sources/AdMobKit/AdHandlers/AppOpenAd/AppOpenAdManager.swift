@@ -7,12 +7,13 @@
 import UIKit
 import GoogleMobileAds
 
+@MainActor
 public final class AppOpenAdManager: NSObject {
     
     private var presentableAppOpenAd: AppOpenAd?
     weak var delegate: AppOpenAdManagerDelegate?
 }
-extension AppOpenAdManager: AppOpenAdProtocol {
+extension AppOpenAdManager: @preconcurrency AppOpenAdProtocol {
     public func loadAd(adUnitID: String, completion: ((Result<Bool, Error>) -> Void)? = nil) {
         let request = Request()
         let id = adUnitID

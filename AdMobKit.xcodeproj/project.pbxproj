@@ -32,11 +32,6 @@
 			path = Sources;
 			sourceTree = "<group>";
 		};
-		9E05AA302E55D7F700C9B649 /* AdMobKitTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = AdMobKitTests;
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,7 +58,6 @@
 			isa = PBXGroup;
 			children = (
 				9E05AA232E55D7F600C9B649 /* Sources */,
-				9E05AA302E55D7F700C9B649 /* AdMobKitTests */,
 				9E05AA222E55D7F600C9B649 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -126,9 +120,6 @@
 			);
 			dependencies = (
 				9E05AA2F2E55D7F700C9B649 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				9E05AA302E55D7F700C9B649 /* AdMobKitTests */,
 			);
 			name = AdMobKitTests;
 			packageProductDependencies = (
