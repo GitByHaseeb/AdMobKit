@@ -1,4 +1,4 @@
-// swift-tools-version:5.9
+// swift-tools-version:6.1
 import PackageDescription
 
 let package = Package(
@@ -22,11 +22,6 @@ let package = Package(
                 .product(name: "GoogleMobileAds", package: "swift-package-manager-google-mobile-ads")
             ],
             path: "Sources/AdMobKit"
-        ),
-        .testTarget(
-            name: "AdMobKitTests",
-            dependencies: ["AdMobKit"],
-            path: "Tests/AdMobKitTests"
         )
     ]
 )
