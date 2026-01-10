@@ -40,7 +40,7 @@ Handles lifecycle & delegates cleanly
 
 # Swift Package Manager (SPM)
 
-## Add AdMobKit via Xcode:
+Add AdMobKit via Xcode:
 
 Open your project
 
@@ -206,7 +206,7 @@ func didFailToReceiveAdWithError(error: Error) {
 }
 ````
 
-**for swiftUI**
+# for swiftUI
 
 AdMobKit works in SwiftUI using UIViewControllerRepresentable.
 
