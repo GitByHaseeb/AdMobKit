@@ -191,11 +191,115 @@ call for NativeAdManagerDelegate
 
 ````swift
 
+  private var adReadyCompletion: ((UIViewController) -> Void)?
+
+    func preLoadAd(completion: @escaping (UIViewController) -> Void) {
+        adReadyCompletion = completion
+        AdMobManager.shared.preLoadAd(withUnitID: "ca-app-pub-3940256099942544/3986624511", delegate: self)
+    }
+
+    func adLoaderDidReceive(ad: NativeAd) {
+        print("Native ad received")
+        DispatchQueue.main.async {
+            let vc = DisplayNativeAd()
+            self.adReadyCompletion?(vc)
+        }
+    }
+    func didFailToReceiveAdWithError(error: Error) {
+        print("Native ad failed: \(error.localizedDescription)")
+    }
 
 
+IN ViewController in your class
 
+
+ private func displayNativeAd(_ ad: NativeAd) {
+        adContainer.subviews.forEach { $0.removeFromSuperview() }
+        var lastView: UIView? = nil
+        
+        if let headline = ad.headline {
+            let headlineLabel = UILabel()
+            headlineLabel.text = headline
+            headlineLabel.font = .boldSystemFont(ofSize: 16)
+            headlineLabel.translatesAutoresizingMaskIntoConstraints = false
+            adContainer.addSubview(headlineLabel)
+            NSLayoutConstraint.activate([
+                headlineLabel.topAnchor.constraint(equalTo: adContainer.topAnchor, constant: 10),
+                headlineLabel.leadingAnchor.constraint(equalTo: adContainer.leadingAnchor, constant: 10),
+                headlineLabel.trailingAnchor.constraint(equalTo: adContainer.trailingAnchor, constant: -10)
+            ])
+            lastView = headlineLabel
+        }
+        
+        if let icon = ad.icon?.image {
+            let iconView = UIImageView(image: icon)
+            iconView.translatesAutoresizingMaskIntoConstraints = false
+            adContainer.addSubview(iconView)
+            NSLayoutConstraint.activate([
+                iconView.topAnchor.constraint(equalTo: lastView?.bottomAnchor ?? adContainer.topAnchor, constant: 8),
+                iconView.leadingAnchor.constraint(equalTo: adContainer.leadingAnchor, constant: 10),
+                iconView.widthAnchor.constraint(equalToConstant: 50),
+                iconView.heightAnchor.constraint(equalToConstant: 50)
+            ])
+            lastView = iconView
+        }
+        
+        if let body = ad.body {
+            let bodyLabel = UILabel()
+            bodyLabel.text = body
+            bodyLabel.numberOfLines = 0
+            bodyLabel.font = .systemFont(ofSize: 14)
+            bodyLabel.translatesAutoresizingMaskIntoConstraints = false
+            adContainer.addSubview(bodyLabel)
+            NSLayoutConstraint.activate([
+                bodyLabel.topAnchor.constraint(equalTo: lastView?.bottomAnchor ?? adContainer.topAnchor, constant: 8),
+                bodyLabel.leadingAnchor.constraint(equalTo: adContainer.leadingAnchor, constant: 10),
+                bodyLabel.trailingAnchor.constraint(equalTo: adContainer.trailingAnchor, constant: -10)
+            ])
+            lastView = bodyLabel
+        }
+        
+        if let callToAction = ad.callToAction {
+            let button = UIButton(type: .system)
+            button.setTitle(callToAction, for: .normal)
+            button.backgroundColor = .systemBlue
+            button.setTitleColor(.white, for: .normal)
+            button.layer.cornerRadius = 5
+            button.translatesAutoresizingMaskIntoConstraints = false
+            adContainer.addSubview(button)
+            NSLayoutConstraint.activate([
+                button.topAnchor.constraint(equalTo: lastView?.bottomAnchor ?? adContainer.topAnchor, constant: 10),
+                button.centerXAnchor.constraint(equalTo: adContainer.centerXAnchor),
+                button.widthAnchor.constraint(equalToConstant: 120),
+                button.heightAnchor.constraint(equalToConstant: 40)
+            ])
+        }
+        
+        // Optional: MediaView
+        let mediaView = MediaView()
+        mediaView.mediaContent = ad.mediaContent
+        mediaView.translatesAutoresizingMaskIntoConstraints = false
+        adContainer.addSubview(mediaView)
+        NSLayoutConstraint.activate([
+            mediaView.topAnchor.constraint(equalTo: lastView?.bottomAnchor ?? adContainer.topAnchor, constant: 10),
+            mediaView.leadingAnchor.constraint(equalTo: adContainer.leadingAnchor),
+            mediaView.trailingAnchor.constraint(equalTo: adContainer.trailingAnchor),
+            mediaView.heightAnchor.constraint(equalToConstant: 120)
+        ])
+    }
+
+extension DisplayNativeAd: NativeAdManagerDelegate {
+    func adLoaderDidReceive(ad: NativeAd) {
+        DispatchQueue.main.async { [weak self] in
+            self?.displayNativeAd(ad)
+        }
+    }
+}
 
 ````
+
+
+**for swiftUI**
 
 
 
