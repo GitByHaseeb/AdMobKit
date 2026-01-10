@@ -4,6 +4,8 @@ ADMobKit is a lightweight and easy to use swift package for integrating GoogleAd
 
 Supports UIKit + SwiftUI and works smoothly in modern Swift projects.
 
+
+
 Ads included:
 
 BannarAd
@@ -16,7 +18,10 @@ RewardedAd
 
 AppOpenAd
 
+
+
 Features:
+
 Simple, minimal API
 
 Swift-first design
@@ -26,6 +31,7 @@ UIKit + SwiftUI friendly
 Production-ready AdMob setup
 
 Handles lifecycle & delegates cleanly
+
 
 Installation:
 
@@ -46,9 +52,18 @@ Or add it manually in Package.swift:
 
 ````swift
 dependencies: [
-    .package(url: "https://github.com/GitByHaseeb/AdMobKit.git", from: "1.0.0")
+    .package(url: "https://github.com/GitByHaseeb/AdMobKit.git", from: "1.0.2")
 ]
 ````
+
+FOR SWIFTUI
+````swift
+Import AdMobKit
+````
+
+
+
+
 
 
 
