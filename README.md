@@ -8,6 +8,8 @@ Supports UIKit + SwiftUI and works smoothly in modern Swift projects.
 
 **Ads included:**
 
+```swift
+
 BannarAd
 
 NativeAd
@@ -19,8 +21,9 @@ RewardedAd
 AppOpenAd
 
 
+```
 
-**Features:**
+##Features:
 
 Simple, minimal API
 
