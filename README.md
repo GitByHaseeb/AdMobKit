@@ -23,7 +23,7 @@ AppOpenAd
 
 ```
 
-##Features:
+**Features:**
 
 Simple, minimal API
 
@@ -38,35 +38,32 @@ Handles lifecycle & delegates cleanly
 
 **Installation:**
 
-Swift Package Manager (SPM)
+# Swift Package Manager (SPM)
 
-Add AdMobKit via Xcode:
+## Add AdMobKit via Xcode:
 
 Open your project
 
 Go to File → Add Packages
 
-
-Paste the repository URL:
+### Paste the repository URL:
 ````swift
 https://github.com/GitByHaseeb/AdMobKit.git
 ````
 
 Or add it manually in Package.swift:
-
 ````swift
 dependencies: [
     .package(url: "https://github.com/GitByHaseeb/AdMobKit.git", from: "1.0.2")
 ]
 ````
 
-
-**To add just import AdMobKit**
+### Import
 ````swift
 Import AdMobKit
 ````
 
-**Conform protocols:**
+**Conform Protocols (As Needed)**
 
 AppOpenAdManagerDelegate
 BannerAdManagerDelegate
@@ -75,262 +72,295 @@ NativeAdManagerDelegate
 RewardedAdManagerDelegate
 
 
-**RewardedAd:**
+**Rewarded Ad**
 
-
-Here AdMobKit provides you a clean methods in which you can call your ads by providing few parameters like this:
-
-Below function load ad with your ad id and display ad in your view with just two lines of code.
+Load and show a rewarded ad with just two calls.
 
 ````swift
-
-    func loadAndShowAd(from controller: UIViewController) {
-        AdMobManager.shared.loadRewardedAd(adUnitID: "Adid") {_ in 
-            AdMobManager.shared.showRewardedAd(in: controller, delegate: self)
-        }
-    }
-
-````
-
-else we can add other delegate methods if we want all are optionals
-
-````swift
-
-    func rewardedAdDidRewardUser() {
-        print("User rewarded")
-    }
-    func rewardedAdDidDismiss() {
-        print("Rewarded ad dismissed")
-    }
-    func rewardedAdDidFailToPresent(error: Error) {
-        print("Rewarded ad failed: \(error.localizedDescription)")
-    }
-
-````
-
-**BannerAd**
-
-Conform BannerAdManagerDelegate and you can call your banner ad in singeton class where you need a view type of UIView in which you can load your ad and pass it to viewcontroller/View
-
-````Swift
-
-    private var bannerView: UIView?
-
-    func loadBannerAd(in controller: UIViewController, container: UIView) {
-        bannerView?.removeFromSuperview()
-        AdMobManager.shared.loadBannerAd(
+func loadAndShowAd(from controller: UIViewController) {
+    AdMobManager.shared.loadRewardedAd(adUnitID: "AdId") { _ in
+        AdMobManager.shared.showRewardedAd(
             in: controller,
-            view: container,
-            adUnitID: "ca-app-pub-3940256099942544/2934735716",
-            adSize: .defaultSizeBanner,
-            adContent: .midScreen,
-            completion: {
-                print("Banner ad loaded")
-            },
             delegate: self
         )
-        // Keep reference to banner view if needed
-        bannerView = container
     }
-
-    func bannerAdDidRecordClick(ad: UIView) {
-        print("Banner clicked")
-    }
-
-    func bannerAdDidFailToLoad(error: Error) {
-        print("Banner failed to load: \(error.localizedDescription)")
-    }
-
+}
 ````
 
-**InterstitialAd**
-
-Call for Interstitial by conforming InterstitialAdManagerDelegate
-
+Optional Delegate Methods
 ````swift
-
-    func loadAndShowAd(from controller: UIViewController) {
-        AdMobManager.shared.loadInterstitialAd(adUnitID: "Adid") { _ in
-            AdMobManager.shared.showInterstitialAd(in: controller, delegate: self)
-        }
-    }
-
-    func interstitialAdDidDismiss() {
-        print("Interstitial ad dismissed")
-    }
-
-    func interstitialAdDidFailToPresent(error: Error) {
-        print("Interstitial ad failed: \(error.localizedDescription)")
-    }
-
+func rewardedAdDidRewardUser() {
+    print("User rewarded")
+}
+func rewardedAdDidDismiss() {
+    print("Rewarded ad dismissed")
+}
+func rewardedAdDidFailToPresent(error: Error) {
+    print("Rewarded ad failed: \(error.localizedDescription)")
+}
 ````
 
+**Banner Ad**
 
-**AppOpenAd**
+Conform to BannerAdManagerDelegate. Provide a UIView container where the banner will be loaded.
 
-Conforming AppOpenAdManagerDelegate and simply call it
+````Swift
+private var bannerView: UIView?
 
-````swift
+func loadBannerAd(in controller: UIViewController, container: UIView) {
+    bannerView?.removeFromSuperview()
 
-    func loadAndShowAd(from controller: UIViewController) {
-        AdMobManager.shared.loadAppOpenAd(adUnitID: "ca-app-pub-3940256099942544/3419835294") { _ in
-            AdMobManager.shared.showAppOpenAd(in: controller, delegate: self)
-        }
-    }
+    AdMobManager.shared.loadBannerAd(
+        in: controller,
+        view: container,
+        adUnitID: "AdId",
+        adSize: .defaultSizeBanner,
+        adContent: .midScreen,
+        completion: {
+            print("Banner ad loaded")
+        },
+        delegate: self
+    )
 
-    func adDidDismissFullScreenContent(ad: FullScreenPresentingAd) {
-        print("App Open ad dismissed")
-    }
-    func didFailToPresentFullScreenContentWithError(error: Error) {
-        print("App Open ad failed: \(error.localizedDescription)")
-    }
+    bannerView = container
+}
 
+func bannerAdDidRecordClick(ad: UIView) {
+    print("Banner clicked")
+}
+
+func bannerAdDidFailToLoad(error: Error) {
+    print("Banner failed to load: \(error.localizedDescription)")
+}
 ````
 
+**Interstitial Ad**
 
-**NativeAd**
-
-call for NativeAdManagerDelegate
+Conform to InterstitialAdManagerDelegate.
 
 ````swift
-
-  private var adReadyCompletion: ((UIViewController) -> Void)?
-
-    func preLoadAd(completion: @escaping (UIViewController) -> Void) {
-        adReadyCompletion = completion
-        AdMobManager.shared.preLoadAd(withUnitID: "ca-app-pub-3940256099942544/3986624511", delegate: self)
+func loadAndShowAd(from controller: UIViewController) {
+    AdMobManager.shared.loadInterstitialAd(adUnitID: "AdId") { _ in
+        AdMobManager.shared.showInterstitialAd(
+            in: controller,
+            delegate: self
+        )
     }
+}
+func interstitialAdDidDismiss() {
+    print("Interstitial ad dismissed")
+}
+func interstitialAdDidFailToPresent(error: Error) {
+    print("Interstitial ad failed: \(error.localizedDescription)")
+}
+````
 
-    func adLoaderDidReceive(ad: NativeAd) {
-        print("Native ad received")
-        DispatchQueue.main.async {
-            let vc = DisplayNativeAd()
-            self.adReadyCompletion?(vc)
-        }
+**App Open Ad**
+
+Conform to AppOpenAdManagerDelegate.
+
+````swift
+func loadAndShowAd(from controller: UIViewController) {
+    AdMobManager.shared.loadAppOpenAd(
+        adUnitID: "AdId"
+    ) { _ in
+        AdMobManager.shared.showAppOpenAd(
+            in: controller,
+            delegate: self
+        )
     }
-    func didFailToReceiveAdWithError(error: Error) {
-        print("Native ad failed: \(error.localizedDescription)")
-    }
+}
+func adDidDismissFullScreenContent(ad: FullScreenPresentingAd) {
+    print("App Open ad dismissed")
+}
+func didFailToPresentFullScreenContentWithError(error: Error) {
+    print("App Open ad failed: \(error.localizedDescription)")
+}
+````
 
+**Native Ad**
 
-IN ViewController in your class
+Conform to NativeAdManagerDelegate and preload the ad.
 
+````swift
+private var adReadyCompletion: ((UIViewController) -> Void)?
 
- private func displayNativeAd(_ ad: NativeAd) {
-        adContainer.subviews.forEach { $0.removeFromSuperview() }
-        var lastView: UIView? = nil
-        
-        if let headline = ad.headline {
-            let headlineLabel = UILabel()
-            headlineLabel.text = headline
-            headlineLabel.font = .boldSystemFont(ofSize: 16)
-            headlineLabel.translatesAutoresizingMaskIntoConstraints = false
-            adContainer.addSubview(headlineLabel)
-            NSLayoutConstraint.activate([
-                headlineLabel.topAnchor.constraint(equalTo: adContainer.topAnchor, constant: 10),
-                headlineLabel.leadingAnchor.constraint(equalTo: adContainer.leadingAnchor, constant: 10),
-                headlineLabel.trailingAnchor.constraint(equalTo: adContainer.trailingAnchor, constant: -10)
-            ])
-            lastView = headlineLabel
-        }
-        
-        if let icon = ad.icon?.image {
-            let iconView = UIImageView(image: icon)
-            iconView.translatesAutoresizingMaskIntoConstraints = false
-            adContainer.addSubview(iconView)
-            NSLayoutConstraint.activate([
-                iconView.topAnchor.constraint(equalTo: lastView?.bottomAnchor ?? adContainer.topAnchor, constant: 8),
-                iconView.leadingAnchor.constraint(equalTo: adContainer.leadingAnchor, constant: 10),
-                iconView.widthAnchor.constraint(equalToConstant: 50),
-                iconView.heightAnchor.constraint(equalToConstant: 50)
-            ])
-            lastView = iconView
-        }
-        
-        if let body = ad.body {
-            let bodyLabel = UILabel()
-            bodyLabel.text = body
-            bodyLabel.numberOfLines = 0
-            bodyLabel.font = .systemFont(ofSize: 14)
-            bodyLabel.translatesAutoresizingMaskIntoConstraints = false
-            adContainer.addSubview(bodyLabel)
-            NSLayoutConstraint.activate([
-                bodyLabel.topAnchor.constraint(equalTo: lastView?.bottomAnchor ?? adContainer.topAnchor, constant: 8),
-                bodyLabel.leadingAnchor.constraint(equalTo: adContainer.leadingAnchor, constant: 10),
-                bodyLabel.trailingAnchor.constraint(equalTo: adContainer.trailingAnchor, constant: -10)
-            ])
-            lastView = bodyLabel
-        }
-        
-        if let callToAction = ad.callToAction {
-            let button = UIButton(type: .system)
-            button.setTitle(callToAction, for: .normal)
-            button.backgroundColor = .systemBlue
-            button.setTitleColor(.white, for: .normal)
-            button.layer.cornerRadius = 5
-            button.translatesAutoresizingMaskIntoConstraints = false
-            adContainer.addSubview(button)
-            NSLayoutConstraint.activate([
-                button.topAnchor.constraint(equalTo: lastView?.bottomAnchor ?? adContainer.topAnchor, constant: 10),
-                button.centerXAnchor.constraint(equalTo: adContainer.centerXAnchor),
-                button.widthAnchor.constraint(equalToConstant: 120),
-                button.heightAnchor.constraint(equalToConstant: 40)
-            ])
-        }
-        
-        // Optional: MediaView
-        let mediaView = MediaView()
-        mediaView.mediaContent = ad.mediaContent
-        mediaView.translatesAutoresizingMaskIntoConstraints = false
-        adContainer.addSubview(mediaView)
-        NSLayoutConstraint.activate([
-            mediaView.topAnchor.constraint(equalTo: lastView?.bottomAnchor ?? adContainer.topAnchor, constant: 10),
-            mediaView.leadingAnchor.constraint(equalTo: adContainer.leadingAnchor),
-            mediaView.trailingAnchor.constraint(equalTo: adContainer.trailingAnchor),
-            mediaView.heightAnchor.constraint(equalToConstant: 120)
-        ])
-    }
+func preLoadAd(completion: @escaping (UIViewController) -> Void) {
+    adReadyCompletion = completion
+    AdMobManager.shared.preLoadAd(
+        withUnitID: "AdId",
+        delegate: self
+    )
+}
 
-extension DisplayNativeAd: NativeAdManagerDelegate {
-    func adLoaderDidReceive(ad: NativeAd) {
-        DispatchQueue.main.async { [weak self] in
-            self?.displayNativeAd(ad)
-        }
+Delegate Methods
+func adLoaderDidReceive(ad: NativeAd) {
+    DispatchQueue.main.async {
+        let vc = DisplayNativeAd()
+        self.adReadyCompletion?(vc)
     }
 }
 
+func didFailToReceiveAdWithError(error: Error) {
+    print("Native ad failed: \(error.localizedDescription)")
+}
 ````
-
 
 **for swiftUI**
 
+AdMobKit works in SwiftUI using UIViewControllerRepresentable.
+
+Load ads using the same APIs
+
+Present from the hosting controller
+
+No separate SwiftUI-only API required
 
 
+# Interstitial / Rewarded / App Open Ads (SwiftUI)
 
+```swift
+Button {
+    if let rootVC = UIApplication.shared
+        .connectedScenes
+        .compactMap({ ($0 as? UIWindowScene)?.keyWindow })
+        .first?
+        .rootViewController
+    {
+        AppOpenAdHelper.shared.loadAndShowAd(from: rootVC)
+    }
+} label: {
+    Text("Show App Open Ad")
+}
 
+Same approach applies for:
+InterstitialAd
+RewardedAd
+AppOpenAd
+Only the load/show method changes.
+```
 
+# Banner & Native Ads (SwiftUI)
 
+````swift
+@State private var isNativeVisible = false
+@State private var isBannerVisible = false
 
+Button("Native Ad") {
+    isNativeVisible.toggle()
+}
 
+Button("Banner Ad") {
+    isBannerVisible.toggle()
+}
 
+if isBannerVisible {
+    BannerAdView(adUnitID: "AdId")
+}
 
+if isNativeVisible {
+    NativeAdViewWrapper(adUnitID: "AdId")
+}
+````
 
+## Banner Ad – SwiftUI Wrapper
 
+````swift
+struct BannerAdView: UIViewRepresentable {
 
+    let adUnitID: String
 
+    func makeUIView(context: Context) -> UIView {
+        let container = UIView()
 
+        let rootVC = UIApplication.shared
+            .connectedScenes
+            .compactMap { ($0 as? UIWindowScene)?.keyWindow }
+            .first?
+            .rootViewController ?? UIViewController()
 
+        AdMobManager.shared.loadBannerAd(
+            in: rootVC,
+            view: container,
+            adUnitID: adUnitID,
+            adSize: .largeSizeBanner,
+            adContent: .fullScreenCover
+        )
 
+        return container
+    }
 
+    func updateUIView(_ uiView: UIView, context: Context) {}
+}
+````
 
+## Native Ad – SwiftUI Wrapper
 
+````swift
+struct NativeAdViewWrapper: UIViewRepresentable {
 
+    let adUnitID: String
 
+    func makeUIView(context: Context) -> NativeAdView {
+        let adView = NativeAdView()
+        adView.frame = CGRect(x: 0, y: 0, width: 300, height: 250)
 
+        let headlineLabel = UILabel()
+        headlineLabel.frame = CGRect(x: 10, y: 10, width: 280, height: 20)
+        adView.headlineView = headlineLabel
+        adView.addSubview(headlineLabel)
 
+        let iconImageView = UIImageView()
+        iconImageView.frame = CGRect(x: 10, y: 40, width: 60, height: 60)
+        adView.iconView = iconImageView
+        adView.addSubview(iconImageView)
 
+        let ctaButton = UIButton(type: .system)
+        ctaButton.frame = CGRect(x: 10, y: 110, width: 120, height: 30)
+        adView.callToActionView = ctaButton
+        adView.addSubview(ctaButton)
 
+        if let rootVC = UIApplication.shared
+            .connectedScenes
+            .compactMap({ ($0 as? UIWindowScene)?.keyWindow })
+            .first?
+            .rootViewController
+        {
+            context.coordinator.adView = adView
+            AdMobManager.shared.nativeAdView = adView
+            AdMobManager.shared.loadNativeAd(
+                in: rootVC,
+                adUnitID: adUnitID,
+                delegate: context.coordinator
+            )
+        }
 
+        return adView
+    }
+
+    func updateUIView(_ uiView: NativeAdView, context: Context) {}
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator()
+    }
+
+    final class Coordinator: NativeAdManagerDelegate {
+        weak var adView: NativeAdView?
+
+        func adLoaderDidReceive(ad: NativeAd) {
+            guard let adView else { return }
+            (adView.headlineView as? UILabel)?.text = ad.headline
+            (adView.iconView as? UIImageView)?.image = ad.icon?.image
+            (adView.callToActionView as? UIButton)?.setTitle(ad.callToAction, for: .normal)
+            adView.nativeAd = ad
+        }
+
+        func didFailToReceiveAdWithError(error: Error) {
+            print("Native Ad Error: \(error.localizedDescription)")
+        }
+    }
+}
+````
 
 
 
