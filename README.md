@@ -39,14 +39,14 @@ Go to File → Add Packages
 
 Paste the repository URL:
 ````swift
-https://github.com/yourusername/AdMobKit.git
+https://github.com/GitByHaseeb/AdMobKit.git
 ````
 
 Or add it manually in Package.swift:
 
 ````swift
 dependencies: [
-    .package(url: "https://github.com/yourusername/AdMobKit.git", from: "1.0.0")
+    .package(url: "https://github.com/GitByHaseeb/AdMobKit.git", from: "1.0.0")
 ]
 ````
 
