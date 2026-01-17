@@ -8,12 +8,13 @@
 import UIKit
 import GoogleMobileAds
 
+@MainActor
 public final class InterstitialAdManager: NSObject {
     
     var presentableInterstitialAd: InterstitialAd?
     weak var delegate: InterstitialAdManagerDelegate?
 }
-extension InterstitialAdManager: IntersitialAdProtocol {
+extension InterstitialAdManager: @preconcurrency IntersitialAdProtocol {
     //Load Functions
     public func loadAd(adUnitID: String, completion: ((Result<Bool, Error>) -> Void)? = nil) {
         let request = Request()

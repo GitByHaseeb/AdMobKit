@@ -1,0 +1,28 @@
+// swift-tools-version:6.2
+import PackageDescription
+
+let package = Package(
+    name: "AdMobKit",
+    platforms: [
+        .iOS(.v14)
+    ],
+    products: [
+        .library(
+            name: "AdMobKit",
+            targets: ["AdMobKit"]
+        ),
+    ],
+    dependencies: [
+        .package(url: "https://github.com/googleads/swift-package-manager-google-mobile-ads.git", from: "12.14.0")
+    ],
+    targets: [
+        .target(
+            name: "AdMobKit",
+            dependencies: [
+                .product(name: "GoogleMobileAds", package: "swift-package-manager-google-mobile-ads")
+            ],
+            path: "Sources/AdMobKit"
+        )
+    ]
+)
+
